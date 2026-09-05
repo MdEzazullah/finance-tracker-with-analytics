@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<div class="summary-cards">
+    <div class="dc dc-income">
+        <span class="dc-tag">Total Income</span>
+        <p>{{ total_income }}</p>
+    </div>
+    <div class="dc dc-expense">
+        <span class="dc-tag">Total Expense</span>
+        <p>{{ total_expense }}</p>
+    </div>
+    <div class="dc dc-balance">
+        <span class="dc-tag">Balance</span>
+        <p>{{ balance }}</p>
+    </div>
+</div>
+
+<h2>Recent Transactions</h2>
+{% if transactions %}
+<div class="tx-list">
+    {% for t in transactions %}
+    <div class="tx-row">
+        <div style="flex:1;">
+            <p style="margin:0;font-weight:700;font-size:14.5px;color:#16211f;">{{ t.description or t.category_name }}</p>
+            <p style="margin:2px 0 0 0;font-size:12.5px;color:#55625e;">{{ t.category_name }} · {{ t.date }}</p>
+        </div>
+        <div style="font-weight:800;font-size:15px;" class="{{ 'income' if t.type == 'income' else 'expense' }}">
+            {{ '+' if t.type == 'income' else '−' }}{{ t.amount }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No transactions yet. <a href="{{ url_for('transactions') }}">Add your first one</a>.</p>
+{% endif %}
+
+{% endblock %}

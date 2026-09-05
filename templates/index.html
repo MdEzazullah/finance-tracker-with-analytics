@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FinTrack — Take control of your money</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="landing-page">
+
+    <nav class="landing-nav">
+        <div class="landing-logo"><span class="brand-fin">Fin</span><span class="brand-track">Track</span></div>
+        <div class="landing-nav-links">
+            <a href="{{ url_for('login') }}" class="btn-outline">Log In</a>
+            <a href="{{ url_for('signup') }}" class="btn-solid">Sign Up</a>
+        </div>
+    </nav>
+
+    <div class="landing-hero">
+        <h1 class="typewriter">Welcome to FinTrack</h1>
+        <p class="landing-tagline">Track spending, set budgets, and see where your money actually goes — all in one place.</p>
+
+        <div class="landing-cta">
+            <a href="{{ url_for('signup') }}" class="btn-solid btn-large">Get Started — It's Free</a>
+            <a href="{{ url_for('login') }}" class="btn-outline btn-large">I already have an account</a>
+        </div>
+    </div>
+
+</body>
+</html>

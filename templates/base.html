@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <nav>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('transactions') }}">Transactions</a>
+        <a href="{{ url_for('budgets') }}">Budgets</a>
+        <div class="nav-dropdown">
+            <a href="{{ url_for('analytics') }}" class="nav-dropdown-toggle">Analytics ▾</a>
+            <div class="nav-dropdown-menu">
+                <div class="nav-dropdown-menu-inner">
+                    <a href="{{ url_for('analytics', view='category') }}">Spending by Category</a>
+                    <a href="{{ url_for('analytics', view='trend') }}">Income vs Expenses</a>
+                    <a href="{{ url_for('analytics', view='budget') }}">Budget vs Actual</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            {% if avatar_url %}
+            <img src="{{ avatar_url }}" alt="Profile" class="nav-avatar" title="{{ current_user_email }}">
+            {% endif %}
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block body_class %}page-analytics{% endblock %}
+{% block content %}
+
+<h1>Analytics</h1>
+
+{% if stats.top_category %}
+<div class="insight-cards">
+    <div class="insight-card">
+        <span class="insight-tag">Top Spending Category</span>
+        <p>{{ stats.top_category }}</p>
+        <p class="insight-sub">{{ stats.top_amount }} spent all-time</p>
+    </div>
+    {% if stats.mom_change_pct is not none %}
+    <div class="insight-card">
+        <span class="insight-tag">Month-over-Month</span>
+        {% if stats.mom_change_pct > 0 %}
+        <p class="expense">▲ {{ stats.mom_change_pct }}%</p>
+        <p class="insight-sub">Spending increased vs last month</p>
+        {% else %}
+        <p class="income">▼ {{ -stats.mom_change_pct }}%</p>
+        <p class="insight-sub">Spending decreased vs last month</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if view == 'category' %}
+<h2>Spending by Category</h2>
+{% if category_chart %}
+<div class="chart-box">
+    <img src="{{ category_chart }}" alt="Spending by category pie chart">
+</div>
+{% else %}
+<p>No expense data yet. Add some transactions to see this chart.</p>
+{% endif %}
+
+{% elif view == 'trend' %}
+<h2>Income vs Expense Trend</h2>
+{% if trend_chart %}
+<div class="chart-box">
+    <img src="{{ trend_chart }}" alt="Monthly income vs expense trend">
+</div>
+{% else %}
+<p>No transaction data yet.</p>
+{% endif %}
+
+{% elif view == 'budget' %}
+<h2>Budget vs Actual Spending</h2>
+{% if budget_chart %}
+<div class="chart-box">
+    <img src="{{ budget_chart }}" alt="Budget vs actual spending by category">
+</div>
+{% else %}
+<p>No budgets set yet. <a href="{{ url_for('budgets') }}">Set one up</a> to see this chart.</p>
+{% endif %}
+{% endif %}
+
+{% endblock %}

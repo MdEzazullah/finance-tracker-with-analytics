@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="auth-backdrop login-bg">
+        <div class="auth-card-wrap">
+            <p class="auth-tagline-float">Every rupee counted. Every goal within reach.</p>
+            <div class="auth-card login-card">
+                <div class="brand-logo"><span class="brand-fin">Fin</span><span class="brand-track">Track</span></div>
+                <h2>Welcome back</h2>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class="flash-messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="you@example.com" required>
+
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+
+                    <button type="submit">Log In</button>
+                </form>
+
+                <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

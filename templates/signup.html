@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="auth-backdrop signup-bg">
+        <div class="auth-card-wrap">
+            <p class="auth-tagline-float">Start building better money habits today.</p>
+            <div class="auth-card signup-card">
+                <div class="brand-logo"><span class="brand-fin">Fin</span><span class="brand-track">Track</span></div>
+                <h2>Create account</h2>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class="flash-messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Your name" required>
+
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="you@example.com" required>
+
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+
+                    <button type="submit">Sign Up</button>
+                </form>
+
+                <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block body_class %}page-transactions{% endblock %}
+{% block content %}
+
+<h1>Transactions</h1>
+
+<h2>Add a Transaction</h2>
+<form method="POST">
+    <label>Category</label>
+    <select name="category_id" required>
+        {% for c in categories if c.name != 'Other' %}
+        <option value="{{ c.id }}">{{ c.name }} ({{ c.type }})</option>
+        {% endfor %}
+        {% for c in categories if c.name == 'Other' %}
+        <option value="{{ c.id }}">{{ c.name }} ({{ c.type }})</option>
+        {% endfor %}
+    </select>
+
+    <label>Type</label>
+    <select name="type" required>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+    </select>
+
+    <label>Amount</label>
+    <input type="number" name="amount" step="0.01" required>
+
+    <label>Date</label>
+    <input type="date" name="date" required>
+
+    <label>Description</label>
+    <input type="text" name="description">
+
+    <button type="submit">Add</button>
+</form>
+
+<h2>All Transactions</h2>
+{% if transactions %}
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th></th>
+    </tr>
+    {% for t in transactions %}
+    <tr>
+        <td>{{ t.date }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ t.amount }}</td>
+        <td>{{ t.description }}</td>
+        <td><span class="table-cat-tag">{{ t.category_name }}</span></td>
+        <td><a href="{{ url_for('delete_transaction_route', transaction_id=t.id) }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No transactions yet.</p>
+{% endif %}
+
+{% endblock %}

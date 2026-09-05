@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block body_class %}page-budgets{% endblock %}
+{% block content %}
+
+<h1>Budgets</h1>
+
+<h2>Set a Monthly Budget</h2>
+<form method="POST">
+    <label>Category</label>
+    <select name="category_id" required>
+        {% for c in categories if c.name != 'Other' %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+        {% for c in categories if c.name == 'Other' %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Monthly Limit</label>
+    <input type="number" name="monthly_limit" step="0.01" required>
+
+    <button type="submit">Save Budget</button>
+</form>
+
+<h2>This Month's Budget Status</h2>
+{% if budget_status %}
+<div class="budget-list">
+    {% for b in budget_status %}
+    {% set palette = ['warm', 'cool', 'violet', 'rose'] %}
+    {% set tone = palette[loop.index0 % 4] %}
+    <div class="budget-pill pill-{{ tone }}">
+        <span class="cat-tag tag-{{ tone }}">{{ b.category_name }}</span>
+        <div class="amounts">Spent <b>{{ b.spent }}</b> / {{ b.limit }}</div>
+        <div class="bar-track">
+            <div class="bar-fill bar-{{ tone }}" style="width: {{ b.pct }}%"></div>
+        </div>
+        {% if b.over_budget %}
+        <p style="margin-top:8px;color:#be123c;font-size:12.5px;font-weight:700;">Over budget</p>
+        {% else %}
+        <p style="margin-top:8px;color:#059669;font-size:12.5px;font-weight:700;">On track</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No budgets set yet. Add one above.</p>
+{% endif %}
+
+{% endblock %}
